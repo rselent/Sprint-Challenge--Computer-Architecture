@@ -1,7 +1,8 @@
 import \
 	sys
 
-FILENAME = "./sctest.ls8"
+#FILENAME = "./sctest.ls8"
+FILENAME = sys.argv[1]
 
 # ALU OPS
 ADD = 0xA0  # Addition
@@ -101,6 +102,7 @@ class CPU:
 	def PRN( self):
 		reg = self.ram[ self.pc + 1]
 		print( self.reg[ reg])
+#		print( self.reg)
 #		self.pc += 2
 	
 	def CMP( self):
@@ -193,7 +195,7 @@ class CPU:
 				address += 1
 			print( "OPENING COMPLETE")
 
-		print( self.ram)
+		print( "FILE CONTENTS:\n", self.ram)
 		self.running = 1
 
 		while self.running:
@@ -205,6 +207,7 @@ class CPU:
 #			print( "IR", ir)
 			if ir in self.switchTable:
 				self.switchTable[ir]()
+			
 			if flag == 0:
 				move = int( (ir & 0xc0) >> 6)
 				self.pc += move + 1
@@ -213,5 +216,4 @@ class CPU:
 
 if __name__ == "__main__":
 	CPU().run()
-	
-	
+
